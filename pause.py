@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, Controller as KeyboardController
+from pynput.mouse import Controller as MouseController
 import urllib.parse
 
 class GP(BaseHTTPRequestHandler):
@@ -12,9 +13,12 @@ class GP(BaseHTTPRequestHandler):
     def do_GET(self):
         self._set_headers()
         if 'favicon' not in self.path:
-            keyboard = Controller()
+            keyboard = KeyboardController()
             keyboard.press(' ')
             keyboard.release(' ')
+            mouse = MouseController()
+            mouse.move(-5, -5)
+            mouse.move(5, 5)
 
 def run(server_class=HTTPServer, handler_class=GP):
     server_address = ('', 8000)
